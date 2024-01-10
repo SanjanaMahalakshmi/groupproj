@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <style>
+        /* Basic styling for demonstration purposes */
+        body {
+
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url("https://images.pexels.com/photos/1831234/pexels-photo-1831234.jpeg?cs=srgb&dl=pexels-madison-inouye-1831234.jpg&fm=jpg") ;
+            background-position:center;
+            
+        }
+        
+
+        h1 {
+            text-align: center;
+        }
+
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            width: 200px;
+        }
+
+        .item img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+        }
+
+        .cart {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .cart-item {
+            margin-bottom: 5px;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body >
+   <center> <h1><i>SHOPPING CART</i></h1></center>
+
+    <div class="items">
+        <div class="item">
+            <img src="https://assets-global.website-files.com/63e19c2a81cdc506a530afe7/640d1c496953390d716bbdd1_630ba264b91de04922c46938_651534-000001.jpeg" alt="Item 1">
+            <p>Item 1 - $10</p>
+            <button onclick="addToCart('Item 1', 10)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <img src="https://ae01.alicdn.com/kf/Hbc7d5ad376fa40839af1193cc70d7a57S/Kavkas-Roupa-De-Bebes-Infantil-Menina-Full-Sleeve-Newborn-Baby-Boy-Rompers-5pcs-Infant-Girls-Clothing.jpg" alt="Item 2">
+            <p>Item 2 - $15</p>
+            <button onclick="addToCart('Item 2', 15)">Add to Cart</button>
+        </div>
+        <div class="item">
+            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71tCJDX-NtL._AC_UF350,350_QL80_.jpg" alt="Item 1">
+            <p>Item 3 - $20</p>
+            <button onclick="addToCart('Item 3', 20)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <img src="https://rukminim2.flixcart.com/image/850/1000/kk4c13k0/hair-accessory/j/3/a/18-in-1-set-baby-girl-hair-clip-elastic-kids-accessories-girls-original-imafzj7nvjgumt7g.jpeg?q=90" alt="Item 2">
+            <p>Item 4 - $35</p>
+            <button onclick="addToCart('Item 4', 35)">Add to Cart</button>
+        </div>
+        <div class="items">
+            <div class="item">
+                <img src="https://www.businessinsider.in/thumb/msid-87178868,width-640,resizemode-4/Master.jpg" alt="Item 1">
+                <p>Item 5 - $100</p>
+                <button onclick="addToCart('Item 5', 100)">Add to Cart</button>
+            </div>
+    
+            <div class="item">
+                <img src="https://assets.winni.in/product/primary/2014/6/31477.jpeg?dpr=2&w=220" alt="Item 2">
+                <p>Item 6 - $150</p>
+                <button onclick="addToCart('Item 6', 150)">Add to Cart</button>
+            </div>
+            <div class="item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpa8O5jv_hicaVxaYF8GWZBCOQx7dC2Xn0GA&usqp=CAU" alt="Item 1">
+                <p>Item 7 - $200</p>
+                <button onclick="addToCart('Item 7', 200)">Add to Cart</button>
+            </div>
+    
+            <div class="item">
+                <img src= "https://pbs.twimg.com/media/FHqhWd8X0AcKk8y.jpg"alt="Item 2">
+                <p>Item 8 - $350</p>
+                <button onclick="addToCart('Item 8', 350)">Add to Cart</button>
+            </div>
+            <div class="item">
+                <img src="https://m.economictimes.com/thumb/msid-53183395,width-1200,height-900,resizemode-4,imgsize-41432/samsung-redefined-curved-tv-experience-with-series-9-suhd-curved-smart-tv-quick-review.jpg" alt="Item 2">
+                <p>Item 9 - $3500</p>
+                <button onclick="addToCart('Item 9', 3500)">Add to Cart</button>
+            </div>
+            
+
+        
+    </div>
+
+    <div class="cart">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <p class="total">Total: $<span id="total-price">0</span></p>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(itemName, price) {
+            cart.push({ name: itemName, price: price });
+            showCart();
+        }
+
+        function showCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = '';
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.textContent = `${item.name} - $${item.price}`;
+                cartItemsDiv.appendChild(cartItem);
+                totalPrice += item.price;
+            });
+
+            document.getElementById('total-price').textContent = totalPrice;
+        }
+    </script>
+</body>
+
+</html>
